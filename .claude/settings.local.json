@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(dir:*)",
-      "Bash(dir /s /b \"D:\\\\Web Development Projects\\\\Capstone Project 1 - Online Resume\")"
-    ]
-  }
-}
