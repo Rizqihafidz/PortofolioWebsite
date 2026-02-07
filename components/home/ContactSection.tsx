@@ -1,3 +1,5 @@
+'use client'
+
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
 export default function ContactSection() {
@@ -45,7 +47,7 @@ export default function ContactSection() {
                   <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
                     Location
                   </p>
-                  <p className="font-bold">Malang, Indonesia</p>
+                  <p className="font-bold">Jakarta, Indonesia</p>
                 </div>
               </div>
             </div>

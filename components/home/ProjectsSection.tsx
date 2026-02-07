@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { projects } from '@/data/projects'
 
 export default function ProjectsSection() {
@@ -20,7 +20,7 @@ export default function ProjectsSection() {
           {projects.map((project) => (
             <Link
               key={project.slug}
-              to={`/projects/${project.slug}`}
+              href={`/projects/${project.slug}`}
               className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all block"
             >
               {/* Card Image */}

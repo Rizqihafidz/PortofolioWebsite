@@ -2,7 +2,10 @@ import type { Config } from 'tailwindcss'
 import forms from '@tailwindcss/forms'
 
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -13,7 +16,7 @@ export default {
         'background-dark': '#101c22',
       },
       fontFamily: {
-        display: ['Inter', 'sans-serif'],
+        display: ['var(--font-inter)', 'sans-serif'],
       },
     },
   },
