@@ -8,20 +8,6 @@ interface Props {
 export default function ProjectSidebar({ project }: Props) {
   return (
     <aside className="w-full lg:w-80 flex flex-col gap-10">
-      {/* Tech Stack */}
-      <div className="space-y-6">
-        <h3 className="text-xl font-bold tracking-tight">Technical Details</h3>
-        <div className="flex flex-wrap gap-2">
-          {project.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm font-medium hover:border-primary transition-colors cursor-default"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* Action Links */}
       {project.links.length > 0 && (
@@ -33,11 +19,10 @@ export default function ProjectSidebar({ project }: Props) {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center justify-between group w-full p-4 rounded-xl font-bold transition-all ${
-                link.isPrimary
-                  ? 'bg-primary text-white hover:translate-y-[-2px] shadow-lg shadow-primary/30'
-                  : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10'
-              }`}
+              className={`flex items-center justify-between group w-full p-4 rounded-xl font-bold transition-all ${link.isPrimary
+                ? 'bg-primary text-white hover:translate-y-[-2px] shadow-lg shadow-primary/30'
+                : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10'
+                }`}
             >
               <span>{link.label}</span>
               <MaterialIcon
@@ -55,7 +40,7 @@ export default function ProjectSidebar({ project }: Props) {
           Dev Highlights
         </h3>
         <ul className="space-y-3">
-          {project.highlights.slice(0, 3).map((highlight, index) => (
+          {project.highlights.map((highlight, index) => (
             <li key={index} className="flex items-start gap-3 text-sm">
               <MaterialIcon
                 name="check_circle"
@@ -65,6 +50,21 @@ export default function ProjectSidebar({ project }: Props) {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Tech Stack */}
+      <div className="space-y-6">
+        <h3 className="text-xl font-bold tracking-tight">Technical Details</h3>
+        <div className="flex flex-wrap gap-2">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm font-medium hover:border-primary transition-colors cursor-default"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
       </div>
     </aside>
   )

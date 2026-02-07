@@ -20,7 +20,13 @@ export default function ProjectHero({ project }: Props) {
       <div className="absolute bottom-0 left-0 w-full z-20 px-6 lg:px-20 pb-12 lg:pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col gap-4 max-w-3xl">
-            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border border-primary/20">
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border ${
+                project.type === 'game'
+                  ? 'bg-red-500/10 text-red-500 border-red-500/20'
+                  : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+              }`}
+            >
               {project.badge}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter">

@@ -7,19 +7,19 @@ const aboutCards = [
     description: 'S1 Informatics Engineering from Brawijaya University with 3.66 GPA.',
   },
   {
-    icon: 'sports_esports',
-    title: 'Game Dev',
-    description: 'Developed games in Unity & C# including thesis research project.',
-  },
-  {
     icon: 'group',
     title: 'Leadership',
     description: 'Led Game Designer Division in Raion Community for 1 year.',
   },
   {
-    icon: 'article',
-    title: 'Published',
-    description: 'Thesis published in J-PTIIK journal of Brawijaya University.',
+    icon: 'sports_esports',
+    title: 'Game Dev',
+    description: 'Developed games in Unity & C# including thesis research project.',
+  },
+  {
+    icon: 'web',
+    title: 'Web Dev',
+    description: 'Developed this portfolio website using Next.js 16, React 19, and Tailwind CSS.',
   },
 ]
 

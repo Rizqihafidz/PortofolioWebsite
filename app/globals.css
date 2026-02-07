@@ -21,3 +21,17 @@
         backdrop-filter: blur(12px);
     }
 }
+
+/* Carousel utilities */
+.carousel-track {
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.carousel-track:active {
+    cursor: grabbing;
+}
+
+.carousel-track.dragging a {
+    pointer-events: none;
+}

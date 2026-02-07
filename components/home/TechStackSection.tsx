@@ -1,12 +1,13 @@
-import MaterialIcon from '@/components/ui/MaterialIcon'
+import { SiUnity, SiSharp, SiFigma, SiHtml5, SiGit, SiNotion } from 'react-icons/si'
+import type { IconType } from 'react-icons'
 
-const techItems = [
-  { icon: 'sports_esports', name: 'Unity' },
-  { icon: 'code', name: 'C#' },
-  { icon: 'design_services', name: 'Figma' },
-  { icon: 'html', name: 'HTML/CSS' },
-  { icon: 'merge_type', name: 'Git' },
-  { icon: 'edit_note', name: 'Notion' },
+const techItems: { icon: IconType; name: string }[] = [
+  { icon: SiUnity, name: 'Unity' },
+  { icon: SiSharp, name: 'C#' },
+  { icon: SiFigma, name: 'Figma' },
+  { icon: SiHtml5, name: 'HTML/CSS' },
+  { icon: SiGit, name: 'Git' },
+  { icon: SiNotion, name: 'Notion' },
 ]
 
 export default function TechStackSection() {
@@ -27,7 +28,7 @@ export default function TechStackSection() {
               className="flex flex-col items-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-transparent hover:border-primary/30 transition-all group"
             >
               <div className="size-16 rounded-xl bg-white dark:bg-slate-700 flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
-                <MaterialIcon name={item.icon} className="text-3xl text-primary" />
+                <item.icon className="text-3xl text-primary" />
               </div>
               <span className="font-bold text-sm">{item.name}</span>
             </div>
