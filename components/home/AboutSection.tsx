@@ -54,16 +54,30 @@ export default function AboutSection({ data }: Props) {
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {cards.map((card) => (
-              <div
-                key={card.title}
-                className="p-8 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 shadow-sm group hover:border-primary/50 transition-all"
-              >
-                <MaterialIcon name={card.icon} className="text-4xl text-primary mb-4 block" />
-                <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">{card.description}</p>
-              </div>
-            ))}
+            {cards.map((card, index) => {
+              const gradients = [
+                'from-purple-500 to-indigo-500',
+                'from-blue-500 to-cyan-500',
+                'from-green-500 to-emerald-500',
+                'from-orange-500 to-red-500',
+              ]
+              const gradient = gradients[index % gradients.length]
+
+              return (
+                <div
+                  key={card.title}
+                  className="relative p-8 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 shadow-sm group hover:shadow-lg transition-all overflow-hidden"
+                >
+                  {/* Gradient border on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
+                  <div className="relative z-10">
+                    <MaterialIcon name={card.icon} className="text-4xl text-primary mb-4 block" />
+                    <h3 className="text-xl font-bold mb-2">{card.title}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{card.description}</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

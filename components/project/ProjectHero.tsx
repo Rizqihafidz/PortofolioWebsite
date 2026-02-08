@@ -14,6 +14,8 @@ export default function ProjectHero({ project }: Props) {
         alt={`${project.title} hero image`}
         fill
         priority
+        placeholder="blur"
+        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAQABgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgUH/8QAJBAAAgEDAwQDAQAAAAAAAAAAAQIDBAURAAYhEhMxQRRRYXH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EAB8RAAIBAwUBAAAAAAAAAAAAAAECAAMRIQQFEjFBYf/aAAwDAQACEQMRAD8AMtG0LVtW7RXa5VFVJHDGzx0sMnajdgAMcHwMgc+M6ltW/Le2re6SZBNHUSGKOplj5hYkAgE8EEeOeNJbu3DV7gu0lxqmVS3CRr4RfwD++z+6P7huNFabdUXCvlSCmp42klkf+VUZJ/Oh0tSm1Vyw4zKKlSiH8S+1xRe5j//Z"
         sizes="100vw"
         className="object-cover transition-transform duration-700 hover:scale-105"
       />
@@ -27,8 +29,8 @@ export default function ProjectHero({ project }: Props) {
           <div className="flex flex-col gap-4 max-w-3xl">
             <span
               className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border ${project.type === 'game'
-                  ? 'bg-red-500/10 text-red-500 border-red-500/20'
-                  : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                ? 'bg-red-500/10 text-red-500 border-red-500/20'
+                : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
                 }`}
             >
               {project.badge}

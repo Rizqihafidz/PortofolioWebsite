@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/ui/ThemeToggle'
@@ -16,8 +16,48 @@ const NAV_LINKS = [
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false)
+    const [activeSection, setActiveSection] = useState('home')
+    const [scrollProgress, setScrollProgress] = useState(0)
     const pathname = usePathname()
     const isHome = pathname === '/'
+
+    // Intersection Observer for active section
+    useEffect(() => {
+        if (!isHome) return
+
+        const sectionIds = NAV_LINKS.map((l) => l.href)
+        const observers: IntersectionObserver[] = []
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id)
+            if (!el) return
+
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(id)
+                    }
+                },
+                { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' }
+            )
+            observer.observe(el)
+            observers.push(observer)
+        })
+
+        return () => observers.forEach((o) => o.disconnect())
+    }, [isHome])
+
+    // Scroll progress indicator
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = scrollHeight > 0 ? (window.scrollY / scrollHeight) * 100 : 0
+            setScrollProgress(progress)
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     const getHref = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`)
 
@@ -45,8 +85,12 @@ export default function Navbar() {
                             <a
                                 key={link.href}
                                 href={getHref(link.href)}
-                                className="text-sm font-semibold hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                                className={`text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1 ${isHome && activeSection === link.href
+                                        ? 'text-primary'
+                                        : 'hover:text-primary'
+                                    }`}
                                 aria-label={`Navigate to ${link.label} section`}
+                                aria-current={isHome && activeSection === link.href ? 'true' : undefined}
                             >
                                 {link.label}
                             </a>
@@ -75,33 +119,47 @@ export default function Navbar() {
                         </button>
                     </div>
                 </div>
+
+                {/* Scroll Progress Bar */}
+                <div
+                    className="absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-150"
+                    style={{ width: `${scrollProgress}%` }}
+                />
             </nav>
 
             {/* Mobile Menu Overlay */}
-            {mobileOpen && (
-                <div className="fixed inset-0 z-40 bg-background-light dark:bg-background-dark pt-20">
-                    <div className="flex flex-col items-center gap-8 py-12">
-                        {NAV_LINKS.map((link) => (
-                            <a
-                                key={link.href}
-                                href={getHref(link.href)}
-                                className="text-2xl font-bold hover:text-primary transition-colors"
-                                onClick={handleNavClick}
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+            <div
+                className={`fixed inset-0 z-40 bg-background-light dark:bg-background-dark pt-20 transition-all duration-300 ${mobileOpen
+                        ? 'opacity-100 pointer-events-auto'
+                        : 'opacity-0 pointer-events-none'
+                    }`}
+            >
+                <div className={`flex flex-col items-center gap-8 py-12 transition-transform duration-300 ${mobileOpen ? 'translate-y-0' : '-translate-y-4'
+                    }`}>
+                    {NAV_LINKS.map((link, index) => (
                         <a
-                            href="/assets/resume.pdf"
-                            download
-                            className="mt-4 px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25"
+                            key={link.href}
+                            href={getHref(link.href)}
+                            className={`text-2xl font-bold transition-all ${isHome && activeSection === link.href
+                                    ? 'text-primary'
+                                    : 'hover:text-primary'
+                                }`}
                             onClick={handleNavClick}
+                            style={{ transitionDelay: mobileOpen ? `${index * 50}ms` : '0ms' }}
                         >
-                            Download CV
+                            {link.label}
                         </a>
-                    </div>
+                    ))}
+                    <a
+                        href="/assets/resume.pdf"
+                        download
+                        className="mt-4 px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25"
+                        onClick={handleNavClick}
+                    >
+                        Download CV
+                    </a>
                 </div>
-            )}
+            </div>
         </>
     )
 }

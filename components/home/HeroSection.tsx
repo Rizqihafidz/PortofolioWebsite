@@ -12,13 +12,16 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10 w-full">
         {/* Text Content */}
         <div className="order-2 lg:order-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary mb-6">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary mb-6 hover:bg-primary/20 transition-colors cursor-pointer"
+          >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
             <span className="text-xs font-bold uppercase tracking-wider">Open to Work</span>
-          </div>
+          </a>
 
           <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-tight">
             Crafting <span className="text-primary">Games</span> & Digital Experiences
@@ -57,6 +60,8 @@ export default function HeroSection() {
                 alt="Rizqi Maulana Hafidz - Game Developer & Designer"
                 fill
                 priority
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAgEEAQUBAAAAAAAAAAAAAQIDAAQFESEGEhMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABsRAQACAgMAAAAAAAAAAAAAAAEAAgMRBBIh/9oADAMBEQCEAPwAuuncRHl8VO9wxa3KJCZYxsdsjkDySPvHFFFVOTliusqMfZ//2Q=="
                 sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, 480px"
                 className="object-cover"
               />

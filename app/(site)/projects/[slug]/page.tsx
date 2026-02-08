@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { serializeProject, projectInclude } from '@/lib/project-serialize'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import ProjectHero from '@/components/project/ProjectHero'
 import ProjectMetadata from '@/components/project/ProjectMetadata'
 import ProjectOverview from '@/components/project/ProjectOverview'
@@ -62,6 +63,10 @@ export default async function ProjectPage({ params }: PageProps) {
             <ProjectMetadata metadata={project.metadata} />
 
             <section className="max-w-7xl mx-auto px-6 lg:px-20 py-16">
+                <Breadcrumb items={[
+                    { label: 'Projects', href: '/#projects' },
+                    { label: project.title }
+                ]} />
                 <ProjectNavigation />
 
                 <div className="flex flex-col lg:flex-row gap-16">

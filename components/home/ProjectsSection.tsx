@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 import { useContainerFit } from '@/hooks/useContainerFit'
 import type { Project } from '@/types'
@@ -23,17 +24,17 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
         {/* Type Badge */}
         <span
-          className={`absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm ${
-            project.type === 'game' ? 'bg-red-500/80' : 'bg-emerald-500/80'
-          }`}
+          className={`absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm ${project.type === 'game' ? 'bg-red-500/80' : 'bg-emerald-500/80'
+            }`}
         >
           {project.type === 'game' ? 'Game Development' : 'Web Development'}
         </span>
-        <img
+        <Image
           src={project.cardImage}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          loading="lazy"
+          fill
+          sizes="(max-width: 768px) 300px, 380px"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
 
@@ -256,7 +257,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         >
           <div
             ref={trackRef}
-            className="carousel-track flex gap-6 md:gap-8 w-max will-change-transform"
+            className="carousel-track flex gap-6 md:gap-8 w-max will-change-transform cursor-grab active:cursor-grabbing"
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onTouchStart={onTouchStart}
