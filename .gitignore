@@ -7,6 +7,7 @@ node_modules/
 out/
 dist/
 build/
+.next/cache/
 
 # IDE / Editor
 .vs/
@@ -16,12 +17,14 @@ build/
 *.swo
 *~
 
-# Claude / AI Tools
+# AI Tools
 .claude/
+.gemini/
 
 # Environment variables
 .env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
 .env.production.local
@@ -34,6 +37,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
 # OS generated files
 .DS_Store
@@ -46,26 +50,37 @@ Desktop.ini
 # Testing
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
 
 # Cache
 .cache/
 .eslintcache
 *.tsbuildinfo
-.next/cache/
 
 # Misc
 *.bak
 *.tmp
 *.temp
 
-# Next.js
-next-env.d.ts
-
 # Vercel
 .vercel
 
-# TypeScript
-*.tsbuildinfo
+# Prisma
+/generated/prisma/
+prisma/*.db
+prisma/*.db-journal
 
-# Debug
-.pnpm-debug.log*
+# Docker
+docker-data/
+*.tar
+
+# Next.js standalone (for Docker deployment)
+.next/standalone/
+
+# Sentry
+.sentryclirc
+
+# PWA
+public/sw.js
+public/workbox-*.js

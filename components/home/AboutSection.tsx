@@ -1,6 +1,12 @@
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
-const aboutCards = [
+interface AboutData {
+  bio: string
+  cards: { icon: string; title: string; description: string }[]
+  profileImage: string
+}
+
+const defaultCards = [
   {
     icon: 'school',
     title: 'Education',
@@ -23,7 +29,16 @@ const aboutCards = [
   },
 ]
 
-export default function AboutSection() {
+const defaultBio = '<p>I am Rizqi Maulana Hafidz, an Informatics Engineering graduate from Brawijaya University with a GPA of 3.66. I aspire to have a career as a game developer, combining my passion for gaming with strong technical skills in Unity and C# programming.</p><p>My thesis focused on dynamic difficulty adjustment in a 2D endless runner game, published in J-PTIIK journal. I\'ve also led the Game Designer Division in Raion Community, where I mentored new members and organized game development workshops. I\'m currently seeking opportunities to grow as a developer.</p>'
+
+interface Props {
+  data?: AboutData
+}
+
+export default function AboutSection({ data }: Props) {
+  const cards = data?.cards ?? defaultCards
+  const bio = data?.bio ?? defaultBio
+
   return (
     <section className="py-24 px-6 bg-slate-50 dark:bg-slate-900/30" id="about">
       <div className="max-w-7xl mx-auto">
@@ -31,25 +46,15 @@ export default function AboutSection() {
           {/* Bio */}
           <div>
             <h2 className="text-4xl font-black mb-8 tracking-tight">About Me</h2>
-            <div className="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-              <p>
-                I am Rizqi Maulana Hafidz, an Informatics Engineering graduate from Brawijaya
-                University with a GPA of 3.66. I aspire to have a career as a game developer,
-                combining my passion for gaming with strong technical skills in Unity and C#
-                programming.
-              </p>
-              <p>
-                My thesis focused on dynamic difficulty adjustment in a 2D endless runner game,
-                published in J-PTIIK journal. I've also led the Game Designer Division in Raion
-                Community, where I mentored new members and organized game development workshops.
-                I'm currently seeking opportunities to grow as a developer.
-              </p>
-            </div>
+            <div
+              className="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed [&>p]:mb-0"
+              dangerouslySetInnerHTML={{ __html: bio }}
+            />
           </div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {aboutCards.map((card) => (
+            {cards.map((card) => (
               <div
                 key={card.title}
                 className="p-8 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 shadow-sm group hover:border-primary/50 transition-all"

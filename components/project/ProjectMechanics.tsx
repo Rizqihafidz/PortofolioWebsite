@@ -20,18 +20,15 @@ export default function ProjectMechanics({ mechanics }: Props) {
             className="glass-card bg-white/70 dark:bg-slate-800/40 border border-slate-200 dark:border-white/10 p-8 rounded-xl space-y-3"
           >
             <div
-              className={`flex items-center gap-3 ${
-                mechanic.color === 'primary' ? 'text-primary' : 'text-accent'
-              }`}
+              className={`flex items-center gap-3 ${mechanic.color === 'primary' ? 'text-primary' : 'text-accent'
+                }`}
             >
-              <MaterialIcon name={mechanic.icon} />
               <h4 className="text-xl font-bold">{mechanic.title}</h4>
             </div>
             <p className="text-slate-600 dark:text-slate-400">{mechanic.description}</p>
             <p
-              className={`text-sm font-medium ${
-                mechanic.color === 'primary' ? 'text-primary' : 'text-accent'
-              }`}
+              className={`text-sm font-medium ${mechanic.color === 'primary' ? 'text-primary' : 'text-accent'
+                }`}
             >
               Tech: {mechanic.tech}
             </p>

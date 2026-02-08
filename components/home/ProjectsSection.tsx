@@ -2,8 +2,8 @@
 
 import { useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { projects } from '@/data/projects'
 import MaterialIcon from '@/components/ui/MaterialIcon'
+import { useContainerFit } from '@/hooks/useContainerFit'
 import type { Project } from '@/types'
 
 /* ───────────────────────── Card (reusable) ───────────────────────── */
@@ -66,8 +66,18 @@ const AUTO_SCROLL_SPEED = 0.5 // pixels per frame (~30px/s at 60fps)
 const RESUME_DELAY = 2000     // ms before auto-scroll resumes after drag
 const DRAG_THRESHOLD = 5      // px — minimum movement to count as drag (not click)
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const featuredProjects = projects.slice(-6)
+
+  /* ── adaptive layout ── */
+  const containerRef = useRef<HTMLDivElement>(null)
+  const fitsInRow = useContainerFit(containerRef, {
+    itemCount: featuredProjects.length,
+    cardWidthMobile: 300,
+    cardWidthDesktop: 380,
+    gapMobile: 24,
+    gapDesktop: 32,
+  })
 
   /* ── refs ── */
   const trackRef = useRef<HTMLDivElement>(null)
@@ -107,8 +117,16 @@ export default function ProjectsSection() {
     rafId.current = requestAnimationFrame(tick)
   }, [wrapOffset, applyTransform])
 
-  /* ── lifecycle: measure & start loop ── */
+  /* ── lifecycle: measure & start loop (only in carousel mode) ── */
   useEffect(() => {
+    if (fitsInRow) {
+      if (trackRef.current) {
+        trackRef.current.style.transform = ''
+      }
+      offsetX.current = 0
+      return
+    }
+
     // Measure half-width (one set of projects) after first paint
     const measure = () => {
       if (trackRef.current) {
@@ -124,7 +142,7 @@ export default function ProjectsSection() {
       cancelAnimationFrame(rafId.current)
       if (resumeTimer.current) clearTimeout(resumeTimer.current)
     }
-  }, [tick])
+  }, [tick, fitsInRow])
 
   /* ── pointer start (shared between mouse & touch) ── */
   const handlePointerStart = useCallback((clientX: number) => {
@@ -204,7 +222,7 @@ export default function ProjectsSection() {
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900/30" id="projects">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 mb-16">
+      <div ref={containerRef} className="max-w-7xl mx-auto px-6 mb-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <h2 className="text-4xl font-black mb-4">Featured Work</h2>
@@ -215,31 +233,47 @@ export default function ProjectsSection() {
         </div>
       </div>
 
-      {/* ── Always Carousel ── */}
-      <div
-        className="overflow-hidden select-none"
-        onMouseUp={handlePointerEnd}
-        onMouseLeave={handlePointerEnd}
-      >
-        <div
-          ref={trackRef}
-          className="carousel-track flex gap-6 md:gap-8 w-max will-change-transform"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={handlePointerEnd}
-        >
-          {duplicated.map((project, index) => (
-            <div
-              key={`${project.slug}-${index}`}
-              className="flex-shrink-0 w-[300px] md:w-[380px]"
-            >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+      {fitsInRow ? (
+        /* ── Static Grid ── */
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex justify-center gap-6 md:gap-8">
+            {featuredProjects.map((project) => (
+              <div
+                key={project.slug}
+                className="flex-shrink-0 w-[300px] md:w-[380px]"
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* ── Carousel ── */
+        <div
+          className="overflow-hidden select-none"
+          onMouseUp={handlePointerEnd}
+          onMouseLeave={handlePointerEnd}
+        >
+          <div
+            ref={trackRef}
+            className="carousel-track flex gap-6 md:gap-8 w-max will-change-transform"
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={handlePointerEnd}
+          >
+            {duplicated.map((project, index) => (
+              <div
+                key={`${project.slug}-${index}`}
+                className="flex-shrink-0 w-[300px] md:w-[380px]"
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* See All Projects Button */}
       <div className="max-w-7xl mx-auto px-6 mt-10">

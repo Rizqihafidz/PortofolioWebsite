@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Project } from '@/types'
 
 interface Props {
@@ -8,9 +9,13 @@ export default function ProjectHero({ project }: Props) {
   return (
     <section className="relative w-full h-[50vh] lg:h-[65vh] overflow-hidden bg-slate-100 dark:bg-slate-900">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
-        style={{ backgroundImage: `url('${project.heroImage}')` }}
+      <Image
+        src={project.heroImage}
+        alt={`${project.title} hero image`}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover transition-transform duration-700 hover:scale-105"
       />
 
       {/* Gradient Overlay */}
@@ -21,11 +26,10 @@ export default function ProjectHero({ project }: Props) {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col gap-4 max-w-3xl">
             <span
-              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border ${
-                project.type === 'game'
+              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border ${project.type === 'game'
                   ? 'bg-red-500/10 text-red-500 border-red-500/20'
                   : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
-              }`}
+                }`}
             >
               {project.badge}
             </span>

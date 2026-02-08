@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden px-6" id="home">
@@ -29,14 +31,16 @@ export default function HeroSection() {
 
           <div className="flex flex-wrap gap-4">
             <a
-              className="px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-xl shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-xl shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               href="#projects"
+              aria-label="View my portfolio projects"
             >
               View My Work
             </a>
             <a
-              className="px-8 py-4 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-transparent hover:border-primary/50 transition-all"
+              className="px-8 py-4 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-transparent hover:border-primary/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               href="#contact"
+              aria-label="Contact me for collaboration"
             >
               Let's Talk
             </a>
@@ -48,10 +52,13 @@ export default function HeroSection() {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-[480px] md:h-[480px] bg-slate-100 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl">
-              <img
+              <Image
                 src="/assets/profile-pic.jpeg"
-                alt="Rizqi Maulana Hafidz"
-                className="w-full h-full object-cover"
+                alt="Rizqi Maulana Hafidz - Game Developer & Designer"
+                fill
+                priority
+                sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, 480px"
+                className="object-cover"
               />
             </div>
           </div>

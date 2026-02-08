@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { projects, getProjectBySlug } from '@/data/projects'
+import { prisma } from '@/lib/prisma'
+import { serializeProject, projectInclude } from '@/lib/project-serialize'
 import ProjectHero from '@/components/project/ProjectHero'
 import ProjectMetadata from '@/components/project/ProjectMetadata'
 import ProjectOverview from '@/components/project/ProjectOverview'
@@ -9,44 +10,51 @@ import ProjectMechanics from '@/components/project/ProjectMechanics'
 import ProjectSidebar from '@/components/project/ProjectSidebar'
 import ProjectNavigation from '@/components/project/ProjectNavigation'
 
+export const revalidate = 60
+
 interface PageProps {
     params: Promise<{ slug: string }>
 }
 
-export function generateStaticParams() {
-    return projects.map((project) => ({
-        slug: project.slug,
-    }))
+export async function generateStaticParams() {
+    const projects = await prisma.project.findMany({ select: { slug: true } })
+    return projects.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params
-    const project = getProjectBySlug(slug)
+    const dbProject = await prisma.project.findUnique({
+        where: { slug },
+        select: { title: true, shortDescription: true, heroImage: true },
+    })
 
-    if (!project) {
-        return {
-            title: 'Project Not Found',
-        }
+    if (!dbProject) {
+        return { title: 'Project Not Found' }
     }
 
     return {
-        title: project.title,
-        description: project.shortDescription,
+        title: dbProject.title,
+        description: dbProject.shortDescription,
         openGraph: {
-            title: project.title,
-            description: project.shortDescription,
-            images: [project.heroImage],
+            title: dbProject.title,
+            description: dbProject.shortDescription,
+            images: [dbProject.heroImage],
         },
     }
 }
 
 export default async function ProjectPage({ params }: PageProps) {
     const { slug } = await params
-    const project = getProjectBySlug(slug)
+    const dbProject = await prisma.project.findUnique({
+        where: { slug },
+        include: projectInclude,
+    })
 
-    if (!project) {
+    if (!dbProject) {
         notFound()
     }
+
+    const project = serializeProject(dbProject)
 
     return (
         <>

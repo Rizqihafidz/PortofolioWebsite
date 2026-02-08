@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { projects } from '@/data/projects'
+import { prisma } from '@/lib/prisma'
+import { serializeProject, projectInclude } from '@/lib/project-serialize'
 import MaterialIcon from '@/components/ui/MaterialIcon'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'All Projects',
@@ -9,7 +12,13 @@ export const metadata: Metadata = {
     'Browse through all of my projects — game development, web development, and more.',
 }
 
-export default function AllProjectsPage() {
+export default async function AllProjectsPage() {
+  const dbProjects = await prisma.project.findMany({
+    include: projectInclude,
+    orderBy: { createdAt: 'desc' },
+  })
+  const projects = dbProjects.map(serializeProject)
+
   return (
     <main>
       {/* Page Header */}

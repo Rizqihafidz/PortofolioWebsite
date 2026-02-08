@@ -25,7 +25,11 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="fixed top-0 left-0 w-full z-50 glass-nav bg-white/80 dark:bg-background-dark/80 border-b border-slate-200 dark:border-white/5">
+            <nav
+                role="navigation"
+                aria-label="Main navigation"
+                className="fixed top-0 left-0 w-full z-50 glass-nav bg-white/80 dark:bg-background-dark/80 border-b border-slate-200 dark:border-white/5"
+            >
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3" onClick={handleNavClick}>
@@ -41,7 +45,8 @@ export default function Navbar() {
                             <a
                                 key={link.href}
                                 href={getHref(link.href)}
-                                className="text-sm font-semibold hover:text-primary transition-colors"
+                                className="text-sm font-semibold hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                                aria-label={`Navigate to ${link.label} section`}
                             >
                                 {link.label}
                             </a>
@@ -54,15 +59,17 @@ export default function Navbar() {
                         <a
                             href="/assets/resume.pdf"
                             download
-                            className="hidden lg:flex px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-primary/25"
+                            className="hidden lg:flex px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            aria-label="Download my resume in PDF format"
                         >
                             Download CV
                         </a>
                         {/* Mobile hamburger */}
                         <button
-                            className="md:hidden size-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            className="md:hidden size-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                             onClick={() => setMobileOpen(!mobileOpen)}
-                            aria-label="Toggle menu"
+                            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                            aria-expanded={mobileOpen}
                         >
                             <MaterialIcon name={mobileOpen ? 'close' : 'menu'} className="text-2xl" />
                         </button>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import type { GalleryItem } from '@/types'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
@@ -28,15 +29,15 @@ export default function ProjectGallery({ gallery }: Props) {
           return (
             <div
               key={index}
-              className={`group relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 shadow-sm ${
-                isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
-              }`}
+              className={`group relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 shadow-sm ${isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
+                }`}
             >
-              <img
+              <Image
                 src={item.src}
                 alt={item.caption}
-                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
                 <p className="text-sm font-bold">{item.caption}</p>
@@ -51,7 +52,9 @@ export default function ProjectGallery({ gallery }: Props) {
         <div className="flex justify-center">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="inline-flex items-center gap-2 text-primary font-bold text-sm hover:text-primary/80 transition-colors"
+            className="inline-flex items-center gap-2 text-primary font-bold text-sm hover:text-primary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg px-3 py-2"
+            aria-expanded={showAll}
+            aria-label={showAll ? 'Show fewer gallery images' : 'Show all gallery images'}
           >
             {showAll
               ? 'Show Less'

@@ -16,6 +16,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         const stored = localStorage.getItem(STORAGE_KEY)
         if (stored !== null) {
             setIsDark(stored === 'dark')
+        } else {
+            // Check DOM state set by blocking script
+            setIsDark(document.documentElement.classList.contains('dark'))
         }
     }, [])
 
