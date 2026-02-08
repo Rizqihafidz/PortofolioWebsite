@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import type { GalleryItem } from '@/types'
 import MaterialIcon from '@/components/ui/MaterialIcon'
+import Lightbox from '@/components/ui/Lightbox'
 
 const DISPLAY_LIMIT = 4
 
@@ -13,11 +14,18 @@ interface Props {
 
 export default function ProjectGallery({ gallery }: Props) {
   const [showAll, setShowAll] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   if (gallery.length === 0) return null
 
   const visibleGallery = showAll ? gallery : gallery.slice(0, DISPLAY_LIMIT)
   const hasMore = gallery.length > DISPLAY_LIMIT
+
+  const handleImageClick = (visibleIndex: number) => {
+    // If showing limited, map visible index to full gallery index
+    const fullIndex = showAll ? visibleIndex : visibleIndex
+    setLightboxIndex(fullIndex)
+  }
 
   return (
     <div className="space-y-8">
@@ -27,10 +35,12 @@ export default function ProjectGallery({ gallery }: Props) {
           const isWide =
             index === visibleGallery.length - 1 && visibleGallery.length % 2 !== 0
           return (
-            <div
+            <button
               key={index}
-              className={`group relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 shadow-sm ${isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
+              onClick={() => handleImageClick(index)}
+              className={`group relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
                 }`}
+              aria-label={`View ${item.caption} in fullscreen`}
             >
               <Image
                 src={item.src}
@@ -39,10 +49,16 @@ export default function ProjectGallery({ gallery }: Props) {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <p className="text-sm font-bold">{item.caption}</p>
+              <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+                <MaterialIcon
+                  name="zoom_in"
+                  className="text-4xl text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"
+                />
               </div>
-            </div>
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-sm font-bold text-left">{item.caption}</p>
+              </div>
+            </button>
           )
         })}
       </div>
@@ -65,6 +81,15 @@ export default function ProjectGallery({ gallery }: Props) {
             />
           </button>
         </div>
+      )}
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={showAll ? gallery : visibleGallery}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
     </div>
   )

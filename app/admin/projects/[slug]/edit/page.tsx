@@ -28,7 +28,7 @@ export default function EditProjectPage() {
     title: project.title,
     shortDescription: project.shortDescription,
     tags: [...project.tags],
-    fullDescription: [...project.fullDescription],
+    fullDescription: project.fullDescription.join(''),
     year: project.metadata.year,
     role: project.metadata.role,
     platform: project.metadata.platform,

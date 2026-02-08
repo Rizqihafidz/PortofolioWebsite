@@ -1,4 +1,4 @@
-import { SiUnity, SiSharp, SiFigma, SiHtml5, SiGit, SiNotion } from 'react-icons/si'
+import { SiUnity, SiSharp, SiFigma, SiHtml5, SiGit, SiNotion, SiPostgresql, SiReact, SiNextdotjs } from 'react-icons/si'
 import type { IconType } from 'react-icons'
 
 const techItems: { icon: IconType; name: string }[] = [
@@ -8,6 +8,9 @@ const techItems: { icon: IconType; name: string }[] = [
   { icon: SiHtml5, name: 'HTML/CSS' },
   { icon: SiGit, name: 'Git' },
   { icon: SiNotion, name: 'Notion' },
+  { icon: SiPostgresql, name: 'PostgreSQL' },
+  { icon: SiReact, name: 'React' },
+  { icon: SiNextdotjs, name: 'Next.js' },
 ]
 
 export default function TechStackSection() {

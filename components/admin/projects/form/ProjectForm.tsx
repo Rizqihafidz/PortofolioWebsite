@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAdminData } from '@/context/AdminDataContext'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 import TagInput from '@/components/admin/ui/TagInput'
+import RichTextEditor from '@/components/admin/ui/RichTextEditor'
 import type { ProjectFormData, GalleryFormItem, MechanicFormItem } from '@/types'
 
 const emptyForm: ProjectFormData = {
@@ -12,7 +13,7 @@ const emptyForm: ProjectFormData = {
   title: '',
   shortDescription: '',
   tags: [],
-  fullDescription: [''],
+  fullDescription: '',
   year: '',
   role: '',
   platform: '',
@@ -58,7 +59,8 @@ export default function ProjectForm({ initialData, editSlug }: Props) {
     if (!form.shortDescription.trim()) e.shortDescription = 'Short description is required'
     if (form.tags.length < 1) e.tags = 'At least 1 tag required'
     if (form.tags.length > 3) e.tags = 'Maximum 3 tags'
-    if (form.fullDescription.filter((p) => p.trim()).length < 1) e.fullDescription = 'At least 1 paragraph required'
+    const fullDesc = typeof form.fullDescription === 'string' ? form.fullDescription : ''
+    if (!fullDesc.trim()) e.fullDescription = 'Full description is required'
     if (!form.year.trim()) e.year = 'Year is required'
     if (!form.role.trim()) e.role = 'Role is required'
     if (!form.platform.trim()) e.platform = 'Platform is required'
@@ -80,7 +82,6 @@ export default function ProjectForm({ initialData, editSlug }: Props) {
     // Clean empty entries
     const cleaned: ProjectFormData = {
       ...form,
-      fullDescription: form.fullDescription.filter((p) => p.trim()),
       highlights: form.highlights.filter((h) => h.trim()),
     }
     setSubmitting(true)
@@ -165,11 +166,10 @@ export default function ProjectForm({ initialData, editSlug }: Props) {
             <button
               key={type}
               onClick={() => set('type', type)}
-              className={`p-6 rounded-xl border-2 transition-all flex items-center justify-center gap-3 ${
-                form.type === type
-                  ? 'border-primary bg-primary/5'
-                  : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
-              }`}
+              className={`p-6 rounded-xl border-2 transition-all flex items-center justify-center gap-3 ${form.type === type
+                ? 'border-primary bg-primary/5'
+                : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
+                }`}
             >
               <MaterialIcon
                 name={type === 'game' ? 'sports_esports' : 'web'}
@@ -217,37 +217,12 @@ export default function ProjectForm({ initialData, editSlug }: Props) {
       {/* [3] Full Description */}
       <div className={sectionClass}>
         <h2 className="text-lg font-bold">Full Description</h2>
-        {form.fullDescription.map((paragraph, i) => (
-          <div key={i} className="flex gap-2">
-            <textarea
-              value={paragraph}
-              onChange={(e) => {
-                const next = [...form.fullDescription]
-                next[i] = e.target.value
-                set('fullDescription', next)
-              }}
-              rows={4}
-              placeholder={`Paragraph ${i + 1}`}
-              className={`${inputClass} resize-none flex-1`}
-            />
-            {form.fullDescription.length > 1 && (
-              <button
-                onClick={() => set('fullDescription', form.fullDescription.filter((_, idx) => idx !== i))}
-                className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg self-start transition-colors"
-              >
-                <MaterialIcon name="close" className="text-xl" />
-              </button>
-            )}
-          </div>
-        ))}
-        <button
-          onClick={() => set('fullDescription', [...form.fullDescription, ''])}
-          className="inline-flex items-center gap-2 text-sm text-primary font-bold hover:text-primary/80 transition-colors"
-        >
-          <MaterialIcon name="add" className="text-xl" />
-          Add Paragraph
-        </button>
-        {errors.fullDescription && <p className="text-red-500 text-xs">{errors.fullDescription}</p>}
+        <RichTextEditor
+          value={form.fullDescription}
+          onChange={(html) => set('fullDescription', html)}
+          placeholder="Write your full project description here..."
+        />
+        {errors.fullDescription && <p className="text-red-500 text-xs mt-2">{errors.fullDescription}</p>}
       </div>
 
       {/* [4] Metadata */}

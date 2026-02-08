@@ -42,7 +42,7 @@ export function formDataToPrismaInput(data: ProjectFormData) {
     type: data.type,
     heroImage: data.gallery[0]?.previewUrl ?? '',
     badge: data.type === 'game' ? 'Game Development' : 'Web Development',
-    fullDescription: data.fullDescription.filter((p) => p.trim()),
+    fullDescription: data.fullDescription.trim() ? [data.fullDescription] : [],
     techStack: data.techStack,
     highlights: data.highlights.filter((h) => h.trim()),
     metaYear: data.year,
