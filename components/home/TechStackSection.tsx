@@ -24,7 +24,7 @@ const techItems: TechItem[] = [
 
 export default function TechStackSection() {
   return (
-    <section className="py-24 px-6" id="tech">
+    <section className="py-16 px-6" id="tech">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-black mb-4">Tech Stack</h2>

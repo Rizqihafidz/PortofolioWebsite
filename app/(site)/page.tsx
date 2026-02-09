@@ -24,22 +24,22 @@ export default async function HomePage() {
 
   const aboutData = profile
     ? {
-        bio: profile.aboutBio,
-        cards: profile.aboutCards.map((c) => ({
-          icon: c.icon,
-          title: c.title,
-          description: c.description,
-        })),
-        profileImage: profile.profileImage,
-      }
+      bio: profile.aboutBio,
+      cards: profile.aboutCards.map((c) => ({
+        icon: c.icon,
+        title: c.title,
+        description: c.description,
+      })),
+      profileImage: profile.profileImage,
+    }
     : undefined
 
   return (
     <>
-      <HeroSection />
+      <HeroSection profileImage={aboutData?.profileImage} />
       <AboutSection data={aboutData} />
-      <TechStackSection />
       <ProjectsSection projects={projects} />
+      <TechStackSection />
       <ContactSection />
     </>
   )

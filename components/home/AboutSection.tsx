@@ -40,7 +40,7 @@ export default function AboutSection({ data }: Props) {
   const bio = data?.bio ?? defaultBio
 
   return (
-    <section className="py-24 px-6 bg-slate-50 dark:bg-slate-900/30" id="about">
+    <section className="py-16 px-6 bg-slate-50 dark:bg-slate-900/30" id="about">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Bio */}
@@ -52,8 +52,8 @@ export default function AboutSection({ data }: Props) {
             />
           </div>
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Cards - aligned with bio paragraph, not title */}
+          <div className="lg:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {cards.map((card, index) => {
               const gradients = [
                 'from-purple-500 to-indigo-500',
@@ -71,8 +71,10 @@ export default function AboutSection({ data }: Props) {
                   {/* Gradient border on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
                   <div className="relative z-10">
-                    <MaterialIcon name={card.icon} className="text-4xl text-primary mb-4 block" />
-                    <h3 className="text-xl font-bold mb-2">{card.title}</h3>
+                    <div className="flex items-center gap-3 mb-3">
+                      <MaterialIcon name={card.icon} className="text-3xl text-primary" />
+                      <h3 className="text-xl font-bold">{card.title}</h3>
+                    </div>
                     <p className="text-sm text-slate-500 dark:text-slate-400">{card.description}</p>
                   </div>
                 </div>

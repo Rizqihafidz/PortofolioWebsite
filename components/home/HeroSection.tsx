@@ -1,7 +1,13 @@
 import Image from 'next/image'
 import { FaLinkedin, FaGithub } from 'react-icons/fa6'
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  profileImage?: string
+}
+
+export default function HeroSection({ profileImage }: HeroSectionProps) {
+  const imageSrc = profileImage || '/assets/profile-pic.jpeg'
+  const isBase64 = imageSrc.startsWith('data:')
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden px-6 pt-8 md:pt-0" id="home">
       {/* Background gradient blobs */}
@@ -30,7 +36,7 @@ export default function HeroSection() {
 
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-xl leading-relaxed">
             Informatics Engineering Graduate from Brawijaya University. Specialized in game
-            development with Unity & C#, with a published thesis on dynamic difficulty adjustment.
+            development with Unity & C# with a published thesis on dynamic difficulty adjustment and web development with Next.js, React, and Tailwind CSS.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -42,29 +48,24 @@ export default function HeroSection() {
               View My Work
             </a>
             <a
-              className="px-8 py-4 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl border border-transparent hover:border-primary/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              href="#contact"
-              aria-label="Contact me for collaboration"
-            >
-              Let's Talk
-            </a>
-            <a
-              className="size-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="px-6 py-4 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center gap-2 font-bold hover:bg-[#0A66C2] hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               href="https://linkedin.com/in/qimau"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
             >
-              <FaLinkedin className="text-2xl" />
+              <FaLinkedin className="text-xl" />
+              LinkedIn
             </a>
             <a
-              className="size-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="px-6 py-4 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center gap-2 font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               href="https://github.com/Rizqihafidz"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
             >
-              <FaGithub className="text-2xl" />
+              <FaGithub className="text-xl" />
+              GitHub
             </a>
           </div>
         </div>
@@ -74,16 +75,24 @@ export default function HeroSection() {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-[480px] md:h-[480px] bg-slate-100 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl">
-              <Image
-                src="/assets/profile-pic.jpeg"
-                alt="Rizqi Maulana Hafidz - Game Developer & Designer"
-                fill
-                priority
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAgEEAQUBAAAAAAAAAAAAAQIDAAQFESEGEhMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABsRAQACAgMAAAAAAAAAAAAAAAEAAgMRBBIh/9oADAMBEQCEAPwAuuncRHl8VO9wxa3KJCZYxsdsjkDySPvHFFFVOTliusqMfZ//2Q=="
-                sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, 480px"
-                className="object-cover"
-              />
+              {isBase64 ? (
+                <img
+                  src={imageSrc}
+                  alt="Rizqi Maulana Hafidz - Game Developer & Designer"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={imageSrc}
+                  alt="Rizqi Maulana Hafidz - Game Developer & Designer"
+                  fill
+                  priority
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAgEEAQUBAAAAAAAAAAAAAQIDAAQFESEGEhMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABsRAQACAgMAAAAAAAAAAAAAAAEAAgMRBBIh/9oADAMBEQCEAPwAuuncRHl8VO9wxa3KJCZYxsdsjkDySPvHFFFVOTliusqMfZ//2Q=="
+                  sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, 480px"
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
         </div>
