@@ -40,14 +40,14 @@ export default function AboutSection({ data }: Props) {
   const bio = data?.bio ?? defaultBio
 
   return (
-    <section className="py-16 px-6 bg-slate-50 dark:bg-slate-900/30" id="about">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-6 bg-slate-800/40" id="about">
+      <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Bio */}
           <div>
             <h2 className="text-4xl font-black mb-8 tracking-tight">About Me</h2>
             <div
-              className="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed [&>p]:mb-0"
+              className="space-y-6 text-lg text-slate-400 leading-relaxed [&>p]:mb-0"
               dangerouslySetInnerHTML={{ __html: bio }}
             />
           </div>
@@ -66,7 +66,7 @@ export default function AboutSection({ data }: Props) {
               return (
                 <div
                   key={card.title}
-                  className="relative p-8 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 shadow-sm group hover:shadow-lg transition-all overflow-hidden"
+                  className="relative p-8 rounded-2xl bg-slate-800/50 border border-white/5 shadow-sm group hover:shadow-lg transition-all overflow-hidden"
                 >
                   {/* Gradient border on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
@@ -75,7 +75,7 @@ export default function AboutSection({ data }: Props) {
                       <MaterialIcon name={card.icon} className="text-3xl text-primary" />
                       <h3 className="text-xl font-bold">{card.title}</h3>
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">{card.description}</p>
+                    <p className="text-sm text-slate-400">{card.description}</p>
                   </div>
                 </div>
               )

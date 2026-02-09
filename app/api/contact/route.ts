@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
     name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -22,36 +25,45 @@ export async function POST(request: Request) {
 
         const { name, email, message } = result.data
 
-        // For now, we'll use a simple approach:
-        // In production, you would integrate with EmailJS, Resend, or similar service
-        // 
-        // Option 1: EmailJS (client-side, configured in frontend)
-        // Option 2: Resend (server-side, requires API key)
-        // Option 3: Nodemailer with SMTP
-        //
-        // For this implementation, we'll log the message and return success
-        // The actual email sending can be added later with EmailJS on the client
-        // or Resend on the server when API keys are configured
+        // Send email using Resend
+        const { error } = await resend.emails.send({
+            from: 'onboarding@resend.dev',
+            to: 'rizqimaulanahafidz156@gmail.com',
+            subject: `Portfolio Contact: New message from ${name}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 10px;">
+                        New Contact Form Submission
+                    </h2>
+                    <div style="margin: 20px 0;">
+                        <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
+                        <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                    </div>
+                    <div style="background-color: #f1f5f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <h3 style="margin-top: 0; color: #334155;">Message:</h3>
+                        <p style="white-space: pre-wrap; color: #475569;">${message}</p>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+                    <p style="color: #94a3b8; font-size: 12px;">
+                        This message was sent from your portfolio website contact form.
+                    </p>
+                </div>
+            `,
+        })
 
-        console.log('📧 New contact form submission:')
-        console.log(`   Name: ${name}`)
-        console.log(`   Email: ${email}`)
-        console.log(`   Message: ${message}`)
-        console.log('---')
+        if (error) {
+            console.error('Resend error:', error)
+            return NextResponse.json(
+                { error: 'Failed to send email. Please try again.' },
+                { status: 500 }
+            )
+        }
 
-        // TODO: Add actual email sending here
-        // Example with Resend:
-        // const resend = new Resend(process.env.RESEND_API_KEY)
-        // await resend.emails.send({
-        //   from: 'onboarding@resend.dev',
-        //   to: 'rizqimaulanahafidz156@gmail.com',
-        //   subject: `New message from ${name}`,
-        //   html: `<p><strong>From:</strong> ${name} (${email})</p><p>${message}</p>`
-        // })
+        console.log('📧 Email sent successfully to rizqimaulanahafidz156@gmail.com')
 
         return NextResponse.json({
             success: true,
-            message: 'Message received! I will get back to you soon.'
+            message: 'Message sent! I will get back to you soon.'
         })
     } catch (error) {
         console.error('Contact form error:', error)

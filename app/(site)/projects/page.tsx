@@ -23,7 +23,7 @@ export default async function AllProjectsPage() {
     <main>
       {/* Page Header */}
       <section className="pt-32 pb-12 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <Link
             href="/#projects"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mb-8 group"
@@ -35,7 +35,7 @@ export default async function AllProjectsPage() {
             Back to Home
           </Link>
           <h1 className="text-4xl md:text-5xl font-black mb-4">All Projects</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
+          <p className="text-slate-400 text-lg max-w-2xl">
             Browse through all of my work and projects across game development,
             web development, and more.
           </p>
@@ -44,13 +44,13 @@ export default async function AllProjectsPage() {
 
       {/* Projects Grid */}
       <section className="pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
               <Link
                 key={project.slug}
                 href={`/projects/${project.slug}`}
-                className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all block"
+                className="group bg-slate-800 rounded-3xl overflow-hidden border border-white/5 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all block"
               >
                 {/* Card Image */}
                 <div className="h-56 overflow-hidden relative">
@@ -61,11 +61,10 @@ export default async function AllProjectsPage() {
                   </div>
                   {/* Type Badge */}
                   <span
-                    className={`absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm ${
-                      project.type === 'game'
+                    className={`absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm ${project.type === 'game'
                         ? 'bg-red-500/80'
                         : 'bg-emerald-500/80'
-                    }`}
+                      }`}
                   >
                     {project.type === 'game'
                       ? 'Game Development'
@@ -85,7 +84,7 @@ export default async function AllProjectsPage() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-700 rounded"
+                        className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-700 rounded"
                       >
                         {tag}
                       </span>
@@ -94,7 +93,7 @@ export default async function AllProjectsPage() {
                   <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                  <p className="text-slate-400 text-sm leading-relaxed">
                     {project.shortDescription}
                   </p>
                 </div>

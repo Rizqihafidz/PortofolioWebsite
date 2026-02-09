@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import ThemeToggle from '@/components/ui/ThemeToggle'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
 const NAV_LINKS = [
@@ -68,9 +67,9 @@ export default function Navbar() {
             <nav
                 role="navigation"
                 aria-label="Main navigation"
-                className="fixed top-0 left-0 w-full z-50 glass-nav bg-white/80 dark:bg-background-dark/80 border-b border-slate-200 dark:border-white/5"
+                className="fixed top-0 left-0 w-full z-50 glass-nav bg-background-dark/80 border-b border-white/5"
             >
-                <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <div className="max-w-5xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3" onClick={handleNavClick}>
                         <div className="size-10 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20">
@@ -86,8 +85,8 @@ export default function Navbar() {
                                 key={link.href}
                                 href={getHref(link.href)}
                                 className={`text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1 ${isHome && activeSection === link.href
-                                        ? 'text-primary'
-                                        : 'hover:text-primary'
+                                    ? 'text-primary'
+                                    : 'hover:text-primary'
                                     }`}
                                 aria-label={`Navigate to ${link.label} section`}
                                 aria-current={isHome && activeSection === link.href ? 'true' : undefined}
@@ -99,7 +98,6 @@ export default function Navbar() {
 
                     {/* Right side */}
                     <div className="flex items-center gap-3">
-                        <ThemeToggle />
                         <a
                             href="/assets/resume.pdf"
                             download
@@ -110,7 +108,7 @@ export default function Navbar() {
                         </a>
                         {/* Mobile hamburger */}
                         <button
-                            className="md:hidden size-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            className="md:hidden size-10 flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                             onClick={() => setMobileOpen(!mobileOpen)}
                             aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
                             aria-expanded={mobileOpen}
@@ -129,9 +127,9 @@ export default function Navbar() {
 
             {/* Mobile Menu Overlay */}
             <div
-                className={`fixed inset-0 z-40 bg-background-light dark:bg-background-dark pt-20 transition-all duration-300 ${mobileOpen
-                        ? 'opacity-100 pointer-events-auto'
-                        : 'opacity-0 pointer-events-none'
+                className={`fixed inset-0 z-40 bg-background-dark pt-20 transition-all duration-300 ${mobileOpen
+                    ? 'opacity-100 pointer-events-auto'
+                    : 'opacity-0 pointer-events-none'
                     }`}
             >
                 <div className={`flex flex-col items-center gap-8 py-12 transition-transform duration-300 ${mobileOpen ? 'translate-y-0' : '-translate-y-4'
@@ -141,8 +139,8 @@ export default function Navbar() {
                             key={link.href}
                             href={getHref(link.href)}
                             className={`text-2xl font-bold transition-all ${isHome && activeSection === link.href
-                                    ? 'text-primary'
-                                    : 'hover:text-primary'
+                                ? 'text-primary'
+                                : 'hover:text-primary'
                                 }`}
                             onClick={handleNavClick}
                             style={{ transitionDelay: mobileOpen ? `${index * 50}ms` : '0ms' }}

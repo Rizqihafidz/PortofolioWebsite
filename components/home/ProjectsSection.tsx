@@ -13,7 +13,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all block h-full"
+      className="group bg-slate-800 rounded-3xl overflow-hidden border border-white/5 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all block h-full"
     >
       {/* Image */}
       <div className="h-48 md:h-56 overflow-hidden relative">
@@ -44,7 +44,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-700 rounded"
+              className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-slate-700 rounded"
             >
               {tag}
             </span>
@@ -53,7 +53,7 @@ function ProjectCard({ project }: { project: Project }) {
         <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-primary transition-colors">
           {project.title}
         </h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-3">
+        <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
           {project.shortDescription}
         </p>
       </div>
@@ -221,13 +221,13 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const duplicated = [...featuredProjects, ...featuredProjects]
 
   return (
-    <section className="py-16 bg-slate-50 dark:bg-slate-900/30" id="projects">
+    <section className="py-20" id="projects">
       {/* Header */}
-      <div ref={containerRef} className="max-w-7xl mx-auto px-6 mb-16">
+      <div ref={containerRef} className="max-w-5xl mx-auto px-6 mb-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <h2 className="text-4xl font-black mb-4">Featured Work</h2>
-            <p className="text-slate-500 dark:text-slate-400">
+            <p className="text-slate-400">
               A selection of my recent projects
             </p>
           </div>
@@ -236,7 +236,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
 
       {fitsInRow ? (
         /* ── Static Grid ── */
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6">
           <div className="flex justify-center gap-6 md:gap-8">
             {featuredProjects.map((project) => (
               <div
@@ -277,7 +277,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
       )}
 
       {/* See All Projects Button */}
-      <div className="max-w-7xl mx-auto px-6 mt-10">
+      <div className="max-w-5xl mx-auto px-6 mt-10">
         <div className="flex justify-end">
           <Link
             href="/projects"

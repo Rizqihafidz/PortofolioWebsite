@@ -62,7 +62,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <ProjectHero project={project} />
             <ProjectMetadata metadata={project.metadata} />
 
-            <section className="max-w-7xl mx-auto px-6 lg:px-20 py-16">
+            <section className="max-w-5xl mx-auto px-6 py-20">
                 <Breadcrumb items={[
                     { label: 'Projects', href: '/#projects' },
                     { label: project.title }

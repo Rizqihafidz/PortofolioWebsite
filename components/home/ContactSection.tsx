@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { z } from 'zod'
-import { FaEnvelope, FaInstagram, FaDiscord } from 'react-icons/fa6'
+import { FaWhatsapp, FaInstagram, FaDiscord, FaYoutube } from 'react-icons/fa6'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
 // Validation schema
@@ -85,14 +85,14 @@ export default function ContactSection() {
   }
 
   const inputClass = (field: keyof ContactFormData) =>
-    `w-full px-5 py-4 bg-white dark:bg-slate-900 border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all ${errors[field]
+    `w-full px-5 py-4 bg-slate-900 border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all ${errors[field]
       ? 'border-red-500 focus:ring-red-500'
-      : 'border-slate-200 dark:border-white/10'
+      : 'border-white/10'
     }`
 
   return (
-    <section className="py-16 px-6" id="contact">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-6" id="contact">
+      <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Contact Info */}
           <div>
@@ -100,7 +100,7 @@ export default function ContactSection() {
               Let's work <br />
               <span className="text-primary">together.</span>
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-md">
+            <p className="text-lg text-slate-400 mb-10 leading-relaxed max-w-md">
               Have a project in mind or just want to say hi? I'm always open to discussing new
               opportunities and creative ideas.
             </p>
@@ -142,14 +142,16 @@ export default function ContactSection() {
             {/* Social Links */}
             <div className="flex items-center gap-4">
               <a
-                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-primary hover:text-primary hover:bg-primary/5 transition-all"
-                href="mailto:rizqimaulanahafidz156@gmail.com"
-                aria-label="Email"
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-white/10 flex items-center justify-center hover:border-[#25D366] hover:text-[#25D366] hover:bg-[#25D366]/5 transition-all"
+                href="https://wa.me/6287884812509"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
               >
-                <FaEnvelope className="text-xl" />
+                <FaWhatsapp className="text-xl" />
               </a>
               <a
-                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-[#E4405F] hover:text-[#E4405F] hover:bg-[#E4405F]/5 transition-all"
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-white/10 flex items-center justify-center hover:border-[#E4405F] hover:text-[#E4405F] hover:bg-[#E4405F]/5 transition-all"
                 href="https://instagram.com/rizqihafidz"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -158,7 +160,7 @@ export default function ContactSection() {
                 <FaInstagram className="text-xl" />
               </a>
               <a
-                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-[#5865F2] hover:text-[#5865F2] hover:bg-[#5865F2]/5 transition-all"
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-white/10 flex items-center justify-center hover:border-[#5865F2] hover:text-[#5865F2] hover:bg-[#5865F2]/5 transition-all"
                 href="https://discordapp.com/users/aractorz"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -166,20 +168,29 @@ export default function ContactSection() {
               >
                 <FaDiscord className="text-xl" />
               </a>
+              <a
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-white/10 flex items-center justify-center hover:border-[#FF0000] hover:text-[#FF0000] hover:bg-[#FF0000]/5 transition-all"
+                href="https://youtube.com/@yourchannelhere"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+              >
+                <FaYoutube className="text-xl" />
+              </a>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="bg-slate-50 dark:bg-slate-800/50 p-8 md:p-12 rounded-3xl border border-slate-200 dark:border-white/5">
+          <div className="bg-slate-800/50 p-8 md:p-12 rounded-3xl border border-white/5">
             {/* Success Message */}
             {status === 'success' && (
-              <div className="mb-6 p-4 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 rounded-xl flex items-center gap-3">
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center gap-3">
                 <div className="size-10 rounded-full bg-green-500 flex items-center justify-center text-white flex-shrink-0">
                   <MaterialIcon name="check" />
                 </div>
                 <div>
-                  <p className="font-bold text-green-800 dark:text-green-400">Message sent!</p>
-                  <p className="text-sm text-green-600 dark:text-green-500">
+                  <p className="font-bold text-green-400">Message sent!</p>
+                  <p className="text-sm text-green-500">
                     Thank you for reaching out. I'll get back to you soon.
                   </p>
                 </div>
@@ -188,13 +199,13 @@ export default function ContactSection() {
 
             {/* Error Message */}
             {status === 'error' && serverError && (
-              <div className="mb-6 p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl flex items-center gap-3">
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3">
                 <div className="size-10 rounded-full bg-red-500 flex items-center justify-center text-white flex-shrink-0">
                   <MaterialIcon name="error" />
                 </div>
                 <div>
-                  <p className="font-bold text-red-800 dark:text-red-400">Failed to send</p>
-                  <p className="text-sm text-red-600 dark:text-red-500">{serverError}</p>
+                  <p className="font-bold text-red-400">Failed to send</p>
+                  <p className="text-sm text-red-500">{serverError}</p>
                 </div>
               </div>
             )}
@@ -211,7 +222,7 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     className={inputClass('name')}
-                    placeholder="John Doe"
+                    placeholder="Enter your name"
                     type="text"
                     disabled={status === 'loading'}
                   />
@@ -232,7 +243,7 @@ export default function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     className={inputClass('email')}
-                    placeholder="john@example.com"
+                    placeholder="Enter your email"
                     type="email"
                     disabled={status === 'loading'}
                   />

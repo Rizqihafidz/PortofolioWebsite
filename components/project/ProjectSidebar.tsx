@@ -21,7 +21,7 @@ export default function ProjectSidebar({ project }: Props) {
               rel="noopener noreferrer"
               className={`flex items-center justify-between group w-full p-4 rounded-xl font-bold transition-all ${link.isPrimary
                 ? 'bg-primary text-white hover:translate-y-[-2px] shadow-lg shadow-primary/30'
-                : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10'
+                : 'bg-white/5 border border-white/10 hover:bg-white/10'
                 }`}
             >
               <span>{link.label}</span>
@@ -35,8 +35,8 @@ export default function ProjectSidebar({ project }: Props) {
       )}
 
       {/* Highlights Card */}
-      <div className="glass-card bg-white/70 dark:bg-slate-800/40 border border-slate-200 dark:border-white/10 p-6 rounded-xl space-y-4">
-        <h3 className="font-bold text-sm uppercase text-slate-400 dark:text-slate-500 tracking-widest">
+      <div className="glass-card bg-slate-800/40 border border-white/10 p-6 rounded-xl space-y-4">
+        <h3 className="font-bold text-sm uppercase text-slate-500 tracking-widest">
           Dev Highlights
         </h3>
         <ul className="space-y-3">
@@ -46,7 +46,7 @@ export default function ProjectSidebar({ project }: Props) {
                 name="check_circle"
                 className="text-primary text-lg flex-shrink-0 mt-0.5"
               />
-              <span className="text-slate-600 dark:text-slate-400">{highlight}</span>
+              <span className="text-slate-400">{highlight}</span>
             </li>
           ))}
         </ul>
@@ -59,7 +59,7 @@ export default function ProjectSidebar({ project }: Props) {
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm font-medium hover:border-primary transition-colors cursor-default"
+              className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm font-medium hover:border-primary transition-colors cursor-default"
             >
               {tech}
             </span>

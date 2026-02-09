@@ -24,11 +24,11 @@ const techItems: TechItem[] = [
 
 export default function TechStackSection() {
   return (
-    <section className="py-16 px-6" id="tech">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-6 bg-slate-800/40" id="tech">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-black mb-4">Tech Stack</h2>
-          <p className="text-slate-500 dark:text-slate-400">
+          <p className="text-slate-400">
             The core tools I use to bring ideas to life
           </p>
         </div>
@@ -37,9 +37,9 @@ export default function TechStackSection() {
           {techItems.map((item) => (
             <div
               key={item.name}
-              className="flex flex-col items-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-transparent hover:border-primary/30 transition-all group"
+              className="flex flex-col items-center p-6 rounded-2xl bg-slate-800/50 border border-transparent hover:border-primary/30 transition-all group"
             >
-              <div className="size-16 rounded-xl bg-white dark:bg-slate-700 flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
+              <div className="size-16 rounded-xl bg-slate-700 flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                 <item.icon
                   className="text-3xl transition-colors"
                   style={{ color: item.color }}
