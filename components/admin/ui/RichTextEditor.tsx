@@ -29,11 +29,16 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Start w
   const editorRef = useRef<HTMLDivElement>(null)
   const isInternalUpdate = useRef(false)
 
-  // Set initial content
+  // Set initial content - wrap in paragraph if needed
   useEffect(() => {
     if (editorRef.current && !isInternalUpdate.current) {
       if (editorRef.current.innerHTML !== value) {
-        editorRef.current.innerHTML = value
+        // Wrap plain text in paragraph tags if not already wrapped
+        let content = value
+        if (content && !content.startsWith('<')) {
+          content = `<p>${content}</p>`
+        }
+        editorRef.current.innerHTML = content
       }
     }
   }, [value])
@@ -60,8 +65,38 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Start w
     if (e.key === 'Tab') {
       e.preventDefault()
       document.execCommand('insertText', false, '    ')
+    } else if (e.key === 'Enter' && !e.shiftKey) {
+      // Create new paragraph on Enter
+      e.preventDefault()
+
+      // Insert a new paragraph
+      const selection = window.getSelection()
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0)
+        range.deleteContents()
+
+        // Create a new paragraph
+        const newParagraph = document.createElement('p')
+        newParagraph.innerHTML = '<br>'
+
+        // Insert the new paragraph
+        range.insertNode(newParagraph)
+
+        // Move cursor to the new paragraph
+        range.setStartAfter(newParagraph)
+        range.collapse(true)
+        selection.removeAllRanges()
+        selection.addRange(range)
+
+        // Trigger input event
+        if (editorRef.current) {
+          isInternalUpdate.current = true
+          onChange(editorRef.current.innerHTML)
+          isInternalUpdate.current = false
+        }
+      }
     }
-  }, [])
+  }, [onChange])
 
   const isEmpty = !value || value === '<br>' || value === '<div><br></div>'
 

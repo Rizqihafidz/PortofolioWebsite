@@ -9,7 +9,7 @@ export default function ProjectHero({ project }: Props) {
   const isBase64 = project.heroImage.startsWith('data:')
 
   return (
-    <section className="relative w-full h-[50vh] lg:h-[65vh] overflow-hidden bg-slate-900">
+    <section className="relative w-full min-h-[60vh] lg:h-[65vh] overflow-hidden bg-slate-900">
       {/* Background Image */}
       {isBase64 ? (
         <img
@@ -34,13 +34,13 @@ export default function ProjectHero({ project }: Props) {
       <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent z-10" />
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 w-full z-20 px-6 pb-12 lg:pb-16">
-        <div className="max-w-5xl mx-auto">
+      <div className="absolute inset-0 z-20 px-6 pt-28 pb-12 lg:pt-0 lg:pb-16 flex items-end">
+        <div className="max-w-5xl mx-auto w-full">
           <div className="flex flex-col gap-4 max-w-3xl">
             <span
               className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit border ${project.type === 'game'
-                ? 'bg-red-500/10 text-red-500 border-red-500/20'
-                : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                 }`}
             >
               {project.badge}

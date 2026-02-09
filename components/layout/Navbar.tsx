@@ -8,8 +8,8 @@ import MaterialIcon from '@/components/ui/MaterialIcon'
 const NAV_LINKS = [
     { label: 'Home', href: 'home' },
     { label: 'About', href: 'about' },
-    { label: 'Skills', href: 'tech' },
     { label: 'Projects', href: 'projects' },
+    { label: 'Skills', href: 'tech' },
     { label: 'Contact', href: 'contact' },
 ]
 
@@ -20,30 +20,46 @@ export default function Navbar() {
     const pathname = usePathname()
     const isHome = pathname === '/'
 
-    // Intersection Observer for active section
+    // Scroll-based active section detection
     useEffect(() => {
         if (!isHome) return
 
         const sectionIds = NAV_LINKS.map((l) => l.href)
-        const observers: IntersectionObserver[] = []
 
-        sectionIds.forEach((id) => {
-            const el = document.getElementById(id)
-            if (!el) return
+        const handleScroll = () => {
+            const scrollY = window.scrollY
+            const windowHeight = window.innerHeight
+            const docHeight = document.documentElement.scrollHeight
 
-            const observer = new IntersectionObserver(
-                ([entry]) => {
-                    if (entry.isIntersecting) {
-                        setActiveSection(id)
+            // If at the bottom of the page, activate the last section
+            if (scrollY + windowHeight >= docHeight - 50) {
+                setActiveSection(sectionIds[sectionIds.length - 1])
+                return
+            }
+
+            // Find the section that is currently in view
+            let currentSection = sectionIds[0]
+            const offset = 100 // Offset from top to consider section as active
+
+            for (const id of sectionIds) {
+                const el = document.getElementById(id)
+                if (el) {
+                    const rect = el.getBoundingClientRect()
+                    // If the section's top is above the offset point, it's the current section
+                    if (rect.top <= offset) {
+                        currentSection = id
                     }
-                },
-                { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' }
-            )
-            observer.observe(el)
-            observers.push(observer)
-        })
+                }
+            }
 
-        return () => observers.forEach((o) => o.disconnect())
+            setActiveSection(currentSection)
+        }
+
+        // Run once on mount
+        handleScroll()
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [isHome])
 
     // Scroll progress indicator

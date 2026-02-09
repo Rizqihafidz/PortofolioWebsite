@@ -170,7 +170,7 @@ export default function ContactSection() {
               </a>
               <a
                 className="size-12 min-w-12 min-h-12 rounded-xl border border-white/10 flex items-center justify-center hover:border-[#FF0000] hover:text-[#FF0000] hover:bg-[#FF0000]/5 transition-all"
-                href="https://youtube.com/@yourchannelhere"
+                href="https://www.youtube.com/@aractorz"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"

@@ -2,14 +2,28 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { signToken } from '@/lib/auth'
 import bcrypt from 'bcryptjs'
+import { z } from 'zod'
+import { sanitizeEmail, sanitizeText } from '@/lib/sanitize'
+
+// Validation schema for login
+const loginSchema = z.object({
+  email: z.string().email('Invalid email format').max(254),
+  password: z.string().min(1, 'Password is required').max(128),
+})
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    const body = await request.json()
 
-    if (!email?.trim() || !password?.trim()) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 })
+    // Validate input
+    const result = loginSchema.safeParse(body)
+    if (!result.success) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 400 })
     }
+
+    // Sanitize email input
+    const email = sanitizeEmail(result.data.email)
+    const password = result.data.password // Don't sanitize password, just validate
 
     const admin = await prisma.admin.findUnique({ where: { email } })
     if (!admin) {

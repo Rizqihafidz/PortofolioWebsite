@@ -1,5 +1,5 @@
 import type { Project } from '@/types'
-import MaterialIcon from '@/components/ui/MaterialIcon'
+import SafeHtml from '@/components/ui/SafeHtml'
 
 interface Props {
   project: Project
@@ -14,10 +14,10 @@ export default function ProjectOverview({ project }: Props) {
           Project Overview
         </h2>
         {project.fullDescription.map((content, index) => (
-          <div
+          <SafeHtml
             key={index}
+            html={content}
             className="prose prose-lg dark:prose-invert max-w-none text-slate-600 dark:text-slate-400"
-            dangerouslySetInnerHTML={{ __html: content }}
           />
         ))}
       </div>

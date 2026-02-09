@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { Resend } from 'resend'
+import { escapeHtml, sanitizeEmail } from '@/lib/sanitize'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    email: z.string().email('Invalid email address'),
-    message: z.string().min(10, 'Message must be at least 10 characters'),
+    name: z.string().min(2, 'Name must be at least 2 characters').max(100),
+    email: z.string().email('Invalid email address').max(254),
+    message: z.string().min(10, 'Message must be at least 10 characters').max(5000),
 })
 
 export async function POST(request: Request) {
@@ -23,7 +24,10 @@ export async function POST(request: Request) {
             )
         }
 
-        const { name, email, message } = result.data
+        // Sanitize input to prevent XSS
+        const name = escapeHtml(result.data.name.trim())
+        const email = sanitizeEmail(result.data.email)
+        const message = escapeHtml(result.data.message.trim())
 
         // Send email using Resend
         const { error } = await resend.emails.send({

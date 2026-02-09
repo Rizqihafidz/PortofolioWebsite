@@ -1,4 +1,5 @@
 import MaterialIcon from '@/components/ui/MaterialIcon'
+import SafeHtml from '@/components/ui/SafeHtml'
 
 interface AboutData {
   bio: string
@@ -46,9 +47,9 @@ export default function AboutSection({ data }: Props) {
           {/* Bio */}
           <div>
             <h2 className="text-4xl font-black mb-8 tracking-tight">About Me</h2>
-            <div
-              className="space-y-6 text-lg text-slate-400 leading-relaxed [&>p]:mb-0"
-              dangerouslySetInnerHTML={{ __html: bio }}
+            <SafeHtml
+              html={bio}
+              className="space-y-4 text-lg text-slate-400 leading-relaxed"
             />
           </div>
 

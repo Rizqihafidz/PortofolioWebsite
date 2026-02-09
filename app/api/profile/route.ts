@@ -1,6 +1,21 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { z } from 'zod'
+import { sanitizeHtml, sanitizeText } from '@/lib/sanitize'
+
+// Validation schema for profile update
+const cardSchema = z.object({
+  icon: z.string().max(50),
+  title: z.string().max(100),
+  description: z.string().max(500),
+})
+
+const profileSchema = z.object({
+  profileImage: z.string().optional(),
+  aboutBio: z.string().max(10000),
+  aboutCards: z.array(cardSchema).max(10),
+})
 
 export async function GET() {
   try {
@@ -37,7 +52,18 @@ export async function PUT(request: Request) {
   }
 
   try {
-    const { profileImage, aboutBio, aboutCards } = await request.json()
+    const body = await request.json()
+
+    // Validate input
+    const result = profileSchema.safeParse(body)
+    if (!result.success) {
+      return NextResponse.json({ error: 'Validation failed', details: result.error.issues }, { status: 400 })
+    }
+
+    const { profileImage, aboutBio, aboutCards } = result.data
+
+    // Sanitize HTML content (aboutBio can contain rich text)
+    const sanitizedBio = sanitizeHtml(aboutBio)
 
     // Delete old cards and recreate
     await prisma.aboutCard.deleteMany({ where: { profileId: 'singleton' } })
@@ -46,12 +72,12 @@ export async function PUT(request: Request) {
       where: { id: 'singleton' },
       data: {
         profileImage,
-        aboutBio,
+        aboutBio: sanitizedBio,
         aboutCards: {
-          create: aboutCards.map((card: { icon: string; title: string; description: string }, i: number) => ({
-            icon: card.icon,
-            title: card.title,
-            description: card.description,
+          create: aboutCards.map((card, i) => ({
+            icon: sanitizeText(card.icon),
+            title: sanitizeText(card.title),
+            description: sanitizeText(card.description),
             order: i,
           })),
         },
