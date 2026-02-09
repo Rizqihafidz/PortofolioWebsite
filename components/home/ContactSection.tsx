@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { z } from 'zod'
-import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa6'
+import { FaEnvelope, FaInstagram, FaDiscord } from 'react-icons/fa6'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
 // Validation schema
@@ -142,29 +142,29 @@ export default function ContactSection() {
             {/* Social Links */}
             <div className="flex items-center gap-4">
               <a
-                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/5 transition-all"
-                href="https://linkedin.com/in/qimau"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin className="text-xl" />
-              </a>
-              <a
-                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-slate-900 hover:text-slate-900 dark:hover:border-white dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
-                href="https://github.com/Rizqihafidz"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <FaGithub className="text-xl" />
-              </a>
-              <a
                 className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-primary hover:text-primary hover:bg-primary/5 transition-all"
                 href="mailto:rizqimaulanahafidz156@gmail.com"
                 aria-label="Email"
               >
                 <FaEnvelope className="text-xl" />
+              </a>
+              <a
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-[#E4405F] hover:text-[#E4405F] hover:bg-[#E4405F]/5 transition-all"
+                href="https://instagram.com/rizqihafidz"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="text-xl" />
+              </a>
+              <a
+                className="size-12 min-w-12 min-h-12 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:border-[#5865F2] hover:text-[#5865F2] hover:bg-[#5865F2]/5 transition-all"
+                href="https://discordapp.com/users/aractorz"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Discord"
+              >
+                <FaDiscord className="text-xl" />
               </a>
             </div>
           </div>

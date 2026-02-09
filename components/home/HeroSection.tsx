@@ -1,8 +1,9 @@
 import Image from 'next/image'
+import { FaLinkedin, FaGithub } from 'react-icons/fa6'
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden px-6" id="home">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden px-6 pt-8 md:pt-0" id="home">
       {/* Background gradient blobs */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 -right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
@@ -32,7 +33,7 @@ export default function HeroSection() {
             development with Unity & C#, with a published thesis on dynamic difficulty adjustment.
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <a
               className="px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-xl shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               href="#projects"
@@ -46,6 +47,24 @@ export default function HeroSection() {
               aria-label="Contact me for collaboration"
             >
               Let's Talk
+            </a>
+            <a
+              className="size-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              href="https://linkedin.com/in/qimau"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="text-2xl" />
+            </a>
+            <a
+              className="size-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              href="https://github.com/Rizqihafidz"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FaGithub className="text-2xl" />
             </a>
           </div>
         </div>
