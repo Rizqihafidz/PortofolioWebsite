@@ -6,19 +6,29 @@ interface Props {
 }
 
 export default function ProjectHero({ project }: Props) {
+  const isBase64 = project.heroImage.startsWith('data:')
+
   return (
     <section className="relative w-full h-[50vh] lg:h-[65vh] overflow-hidden bg-slate-900">
       {/* Background Image */}
-      <Image
-        src={project.heroImage}
-        alt={`${project.title} hero image`}
-        fill
-        priority
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAQABgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgUH/8QAJBAAAgEDAwQDAQAAAAAAAAAAAQIDBAURAAYhEhMxQRRRYXH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EAB8RAAIBAwUBAAAAAAAAAAAAAAECAAMRIQQFEjFBYf/aAAwDAQACEQMRAD8AMtG0LVtW7RXa5VFVJHDGzx0sMnajdgAMcHwMgc+M6ltW/Le2re6SZBNHUSGKOplj5hYkAgE8EEeOeNJbu3DV7gu0lxqmVS3CRr4RfwD++z+6P7huNFabdUXCvlSCmp42klkf+VUZJ/Oh0tSm1Vyw4zKKlSiH8S+1xRe5j//Z"
-        sizes="100vw"
-        className="object-cover transition-transform duration-700 hover:scale-105"
-      />
+      {isBase64 ? (
+        <img
+          src={project.heroImage}
+          alt={`${project.title} hero image`}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+        />
+      ) : (
+        <Image
+          src={project.heroImage}
+          alt={`${project.title} hero image`}
+          fill
+          priority
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAQABgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgUH/8QAJBAAAgEDAwQDAQAAAAAAAAAAAQIDBAURAAYhEhMxQRRRYXH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EAB8RAAIBAwUBAAAAAAAAAAAAAAECAAMRIQQFEjFBYf/aAAwDAQACEQMRAD8AMtG0LVtW7RXa5VFVJHDGzx0sMnajdgAMcHwMgc+M6ltW/Le2re6SZBNHUSGKOplj5hYkAgE8EEeOeNJbu3DV7gu0lxqmVS3CRr4RfwD++z+6P7huNFabdUXCvlSCmp42klkf+VUZJ/Oh0tSm1Vyw4zKKlSiH8S+1xRe5j//Z"
+          sizes="100vw"
+          className="object-cover transition-transform duration-700 hover:scale-105"
+        />
+      )}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent z-10" />

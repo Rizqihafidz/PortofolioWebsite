@@ -27,6 +27,31 @@ export default function ProjectGallery({ gallery }: Props) {
     setLightboxIndex(fullIndex)
   }
 
+  // Helper to render image based on source type
+  const renderImage = (src: string, alt: string) => {
+    const isBase64 = src.startsWith('data:')
+
+    if (isBase64) {
+      return (
+        <img
+          src={src}
+          alt={alt}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      )
+    }
+
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    )
+  }
+
   return (
     <div className="space-y-8">
       <h3 className="text-2xl font-bold tracking-tight">Project Gallery</h3>
@@ -38,17 +63,11 @@ export default function ProjectGallery({ gallery }: Props) {
             <button
               key={index}
               onClick={() => handleImageClick(index)}
-              className={`group relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
+              className={`group relative overflow-hidden rounded-xl bg-slate-800 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${isWide ? 'md:col-span-2 aspect-[21/9]' : 'aspect-video'
                 }`}
               aria-label={`View ${item.caption} in fullscreen`}
             >
-              <Image
-                src={item.src}
-                alt={item.caption}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {renderImage(item.src, item.caption)}
               <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
                 <MaterialIcon
                   name="zoom_in"

@@ -100,16 +100,26 @@ export default function ProjectForm({ initialData, editSlug }: Props) {
     }
   }
 
-  const handleGalleryUpload = (files: FileList | null) => {
+  const handleGalleryUpload = async (files: FileList | null) => {
     if (!files) return
     const remaining = 10 - form.gallery.length
-    const newItems: GalleryFormItem[] = Array.from(files)
-      .slice(0, remaining)
-      .map((file) => ({
-        file,
-        previewUrl: URL.createObjectURL(file),
-        caption: '',
-      }))
+    const filesToProcess = Array.from(files).slice(0, remaining)
+
+    // Convert files to base64
+    const newItems: GalleryFormItem[] = await Promise.all(
+      filesToProcess.map(async (file) => {
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader()
+          reader.onloadend = () => resolve(reader.result as string)
+          reader.readAsDataURL(file)
+        })
+        return {
+          file,
+          previewUrl: base64, // Use base64 instead of blob URL
+          caption: '',
+        }
+      })
+    )
     set('gallery', [...form.gallery, ...newItems])
   }
 

@@ -29,13 +29,21 @@ function ProjectCard({ project }: { project: Project }) {
         >
           {project.type === 'game' ? 'Game Development' : 'Web Development'}
         </span>
-        <Image
-          src={project.cardImage}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 300px, 380px"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        {project.cardImage.startsWith('data:') ? (
+          <img
+            src={project.cardImage}
+            alt={project.title}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        ) : (
+          <Image
+            src={project.cardImage}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 300px, 380px"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        )}
       </div>
 
       {/* Content */}

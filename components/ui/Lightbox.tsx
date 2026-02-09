@@ -214,15 +214,24 @@ export default function Lightbox({ images, initialIndex, onClose }: Props) {
                         transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
                     }}
                 >
-                    <Image
-                        src={currentImage.src}
-                        alt={currentImage.caption}
-                        width={1920}
-                        height={1080}
-                        className="max-w-full max-h-[80vh] object-contain select-none"
-                        draggable={false}
-                        priority
-                    />
+                    {currentImage.src.startsWith('data:') ? (
+                        <img
+                            src={currentImage.src}
+                            alt={currentImage.caption}
+                            className="max-w-full max-h-[80vh] object-contain select-none"
+                            draggable={false}
+                        />
+                    ) : (
+                        <Image
+                            src={currentImage.src}
+                            alt={currentImage.caption}
+                            width={1920}
+                            height={1080}
+                            className="max-w-full max-h-[80vh] object-contain select-none"
+                            draggable={false}
+                            priority
+                        />
+                    )}
                 </div>
             </div>
 
