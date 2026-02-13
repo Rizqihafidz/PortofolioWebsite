@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { z } from 'zod'
 import { sanitizeHtml, sanitizeText } from '@/lib/sanitize'
+import { revalidateProfile } from '@/lib/revalidate'
 
 // Validation schema for profile update
 const cardSchema = z.object({
@@ -86,6 +87,8 @@ export async function PUT(request: Request) {
         aboutCards: { orderBy: { order: 'asc' } },
       },
     })
+
+    revalidateProfile()
 
     return NextResponse.json({
       profileImage: profile.profileImage,

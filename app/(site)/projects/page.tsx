@@ -4,8 +4,6 @@ import { prisma } from '@/lib/prisma'
 import { serializeProject, projectInclude } from '@/lib/project-serialize'
 import MaterialIcon from '@/components/ui/MaterialIcon'
 
-export const revalidate = 60
-
 export const metadata: Metadata = {
   title: 'All Projects',
   description:

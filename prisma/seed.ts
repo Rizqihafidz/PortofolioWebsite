@@ -85,7 +85,7 @@ async function main() {
         },
         mechanics: {
           create: project.mechanics.map((m, i) => ({
-            icon: m.icon ?? null,
+
             title: m.title,
             description: m.description,
             tech: m.tech,

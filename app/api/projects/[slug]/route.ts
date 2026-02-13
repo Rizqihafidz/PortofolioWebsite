@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { formDataToPrismaInput } from '@/lib/project-transform'
 import { serializeProject, projectInclude } from '@/lib/project-serialize'
+import { revalidateProjects } from '@/lib/revalidate'
 
 interface RouteParams {
   params: Promise<{ slug: string }>
@@ -69,6 +70,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
       include: projectInclude,
     })
 
+    revalidateProjects(slug)
+
     return NextResponse.json(serializeProject(project))
   } catch (error) {
     console.error('Update project error:', error)
@@ -86,6 +89,7 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
   try {
     const { slug } = await params
     await prisma.project.delete({ where: { slug } })
+    revalidateProjects(slug)
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })

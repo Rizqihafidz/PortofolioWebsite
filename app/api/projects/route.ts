@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { formDataToPrismaInput } from '@/lib/project-transform'
 import { serializeProject, projectInclude } from '@/lib/project-serialize'
+import { revalidateProjects } from '@/lib/revalidate'
 
 export async function GET() {
   try {
@@ -51,6 +52,8 @@ export async function POST(request: Request) {
       },
       include: projectInclude,
     })
+
+    revalidateProjects(input.slug)
 
     return NextResponse.json(serializeProject(project), { status: 201 })
   } catch (error) {

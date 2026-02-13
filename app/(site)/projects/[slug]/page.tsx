@@ -11,8 +11,6 @@ import ProjectMechanics from '@/components/project/ProjectMechanics'
 import ProjectSidebar from '@/components/project/ProjectSidebar'
 import ProjectNavigation from '@/components/project/ProjectNavigation'
 
-export const revalidate = 60
-
 interface PageProps {
     params: Promise<{ slug: string }>
 }
